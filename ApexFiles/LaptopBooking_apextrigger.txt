@@ -1,0 +1,9 @@
+trigger LaptopBooking on Laptop_Bookings__c(after insert) {
+    for (Laptop_Bookings__c booking : Trigger.new) {
+        if (String.isNotBlank(booking.Email__c)) {
+            LaptopBookingHandler.sendEmailNotification(booking.Email__c);
+        } else {
+            System.debug('Email is missing for booking ID: ' + booking.Id);
+        }
+    }
+}
